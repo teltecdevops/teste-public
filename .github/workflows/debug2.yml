@@ -17,7 +17,8 @@ jobs:
         
       - name: Exportar secrets com gh cli
         run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+          echo "${{ secrets.GHTOKEN }}" | gh auth login --with-token
+          gh auth status
           gh secret list --org teltecdevops | cut -f 1 | tr -d " " | tr -d "\t" >> .env
           cat .env
 
