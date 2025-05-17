@@ -17,7 +17,9 @@ jobs:
         
       - name: Exportar secrets com gh cli
         run: |
-          gh secret list --org teltecdevops | cut -f 1 | tr -d " " | tr -d "\t" | while read s ; do echo "$s=${{ secrets.$s }}" >> .env ; done 
+          #gh secret list --org teltecdevops | cut -f 1 | tr -d " " | tr -d "\t" | while read s ; do echo "$s=${{ secrets.$s }}" >> .env ; done 
+          gh secret list --org teltecdevops | cut -f 1 | tr -d " " | tr -d "\t" >> .env
+          cat .env
 
       - name: Copiar arquivo de segredos
         run: cp -v .env env_vars_export.txt      
@@ -27,9 +29,9 @@ jobs:
           echo "Arquivo criado com sucesso:"
           ls -la .env* *.txt
 
-      - name: Upload do arquivo como artefato
-        uses: actions/upload-artifact@v4
-        with:
-          name: Variaveis_Ambiente
-          path: env_vars_export.txt
-          retention-days: 5  # Define período de retenção do artefato
+      #- name: Upload do arquivo como artefato
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: Variaveis_Ambiente
+      #    path: env_vars_export.txt
+      #    retention-days: 5  # Define período de retenção do artefato
