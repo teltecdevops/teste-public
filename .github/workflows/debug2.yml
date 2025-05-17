@@ -1,0 +1,35 @@
+name: Extração de Secrets
+
+on:
+  workflow_dispatch:
+
+jobs:
+  export-env:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Instala gh cli
+        run: |
+          sudo apt install gh -y          
+          
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        
+      - name: Exportar secrets com gh cli
+        run: |
+          gh secret list --org teltecdevops | cut -f 1 | tr -d " " | tr -d "\t" | while read s ; do echo "$s=${{ secrets.$s }}" >> .env ; done 
+
+      - name: Copiar arquivo de segredos
+        run: cp -v .env env_vars_export.txt      
+        
+      - name: Verificar conteúdo do arquivo (debug)
+        run: |
+          echo "Arquivo criado com sucesso:"
+          ls -la .env* *.txt
+
+      - name: Upload do arquivo como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: Variaveis_Ambiente
+          path: env_vars_export.txt
+          retention-days: 5  # Define período de retenção do artefato
