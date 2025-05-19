@@ -14,7 +14,13 @@ jobs:
           
       - name: Checkout do código
         uses: actions/checkout@v4
-        
+
+      - name: Exportar secrets com gh cli
+        run: |
+          echo -n "SECRET_105 Size:"
+          echo "${{ secrets.SECRET_105 }}" | wc -l
+          if [ "${{ secrets.SECRET_105 }}" == "Teltec@123" ]; then echo "Valor so SECRET_105 acessado com sucesso!" ; fi
+          
       - name: Exportar secrets com gh cli
         run: |
           echo "${{ secrets.GHTOKEN }}" | gh auth login --with-token
