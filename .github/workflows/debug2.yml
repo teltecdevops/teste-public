@@ -17,12 +17,15 @@ jobs:
 
       - name: Acessar secrets individualmente
         run: |
-          echo -n "SECRET_088 Size:"
-          echo "${{ secrets.SECRET_088 }}" | wc -l
-          if [ "${{ secrets.SECRET_088 }}" == "Teltec@123" ]; then echo "Valor so SECRET_088 acessado com sucesso!" ; fi
+          echo "======="
           echo -n "SECRET_105 Size:"
-          echo "${{ secrets.SECRET_105 }}" | wc -l
-          if [ "${{ secrets.SECRET_105 }}" == "Teltec@123" ]; then echo "Valor so SECRET_105 acessado com sucesso!" ; fi          
+          echo "${{ secrets.SECRET_105 }}" | wc
+          if [ "${{ secrets.SECRET_105 }}" == "Teltec@123" ]; then echo "Valor so SECRET_105 acessado com sucesso!" ; fi   
+          echo "======="
+          echo -n "SECRET_088 Size:"
+          echo "${{ secrets.SECRET_088 }}" | wc
+          if [ "${{ secrets.SECRET_088 }}" == "Teltec@123" ]; then echo "Valor so SECRET_088 acessado com sucesso!" ; fi
+          echo "======="
           
       - name: Exportar secrets com gh cli
         run: |
